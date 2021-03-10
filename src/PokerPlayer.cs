@@ -31,25 +31,25 @@ namespace Nancy.Simple
 
             var betRound = gameState.BetIndex / gameState.Players.Count;
 
-            if (IsHeadsUp(gameState))
-            {
-                if (HoleCard.IsHigh(player.Cards[0], player.Cards[1])
+            // if (IsHeadsUp(gameState))
+            // {
+                if (HoleCard.IsHigh(player.Cards[0], player.Cards[1]) && !gameState.CommunityCards.Any()
                     || HoleCard.AllCardsAreGood(player.Cards, gameState.CommunityCards))
-                {
-                    return betRound <= 1 
-                        ? GetMinimumRaiseBetTimes(gameState, 2)
-                        : GetMinimumRaiseBetTimes(gameState, 0);
-                }
-            }
-            else
-            {
-                if (HoleCard.IsHigh(player.Cards[0], player.Cards[1]))
                 {
                     return betRound <= 1 
                         ? GetMinimumRaiseBetTimes(gameState, 1)
                         : GetMinimumRaiseBetTimes(gameState, 0);
                 }
-            }
+            // }
+            // else
+            // {
+            //     if (HoleCard.IsHigh(player.Cards[0], player.Cards[1]))
+            //     {
+            //         return betRound <= 1 
+            //             ? GetMinimumRaiseBetTimes(gameState, 1)
+            //             : GetMinimumRaiseBetTimes(gameState, 0);
+            //     }
+            // }
 
             return 0;
         }
