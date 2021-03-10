@@ -29,9 +29,7 @@ namespace Nancy.Simple
         {
             var player = gameState.Players.Single(p => p.Name == TeamName);
 
-            Console.Error.WriteLine("Round: " + gameState.Round 
-                                  + ", BetIndex: " + gameState.BetIndex 
-                                  + ", Dealer: " + gameState.Dealer);
+            var betRound = gameState.BetIndex / gameState.Players.Count;
 
             if (IsHeadsUp(gameState))
             {
@@ -39,8 +37,9 @@ namespace Nancy.Simple
                 if (HoleCard.IsHigh(player.Cards[0], player.Cards[1])
                     || HoleCard.AllCardsAreGood(player.Cards, gameState.CommunityCards))
                 {
-                    // return GetMinimumRaiseBetTimes(gameState, 3);
-                    return player.Stack;
+                    return betRound <= 1 
+                        ? GetMinimumRaiseBetTimes(gameState, 2)
+                        : GetMinimumRaiseBetTimes(gameState, 0);
                 }
             }
             else
@@ -48,8 +47,9 @@ namespace Nancy.Simple
                 Console.Error.WriteLine("Is no heads up");
                 if (HoleCard.IsHigh(player.Cards[0], player.Cards[1]))
                 {
-                    // return GetMinimumRaiseBetTimes(gameState, 1);
-                    return player.Stack;
+                    return betRound <= 1 
+                        ? GetMinimumRaiseBetTimes(gameState, 1)
+                        : GetMinimumRaiseBetTimes(gameState, 0);
                 }
             }
 
