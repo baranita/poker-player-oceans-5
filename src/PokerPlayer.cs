@@ -31,7 +31,7 @@ namespace Nancy.Simple
             if (IsHeadsUp(gameState))
             {
                 var allCards = player.Cards.Union(gameState.CommunityCards).ToList();
-                if (HoleCard.IsHigh(player) || HoleCard.AllCardsAreGood(allCards))
+                if (HoleCard.IsHigh(player.Cards[0], player.Cards[1]) || HoleCard.AllCardsAreGood(player.Cards, gameState.CommunityCards))
                 {
                     return GetMinimumRaiseBetTimes(gameState, 3);
                 }

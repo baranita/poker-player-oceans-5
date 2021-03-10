@@ -6,12 +6,12 @@ namespace Nancy.Simple
 {
     public static class HoleCard
     {
-        public static bool IsHigh(Player player)
+        public static bool IsHigh(Card firstCard, Card secondCard)
         {
-            var rank1 = player.Cards[0].Rank;
-            var suit1 = player.Cards[0].Suit;
-            var rank2 = player.Cards[1].Rank;
-            var suit2 = player.Cards[1].Suit;
+            var rank1 = firstCard.Rank;
+            var suit1 = firstCard.Suit;
+            var rank2 = secondCard.Rank;
+            var suit2 = secondCard.Suit;
 
             if (rank1 == rank2)
             {
@@ -52,15 +52,37 @@ namespace Nancy.Simple
             return player.Cards.Select(c => c.Rank).Distinct().Count() == 1;
         }
 
-        public static bool AllCardsAreGood(IList<Card> allCards)
+        public static bool AllCardsAreGood(IList<Card> playerCards, IList<Card> communityCards)
         {
-            var pairs = allCards.GroupBy(c => c.Rank);
-            if (pairs.Any(g => g.Count() > 1))
+            if (HasAtLeastOnePair(playerCards, communityCards)) return true;
+
+            // var sameSuit = allCards.GroupBy(c => c.Suit).ToList();
+            // if (sameSuit.Any(g => g.Count() >= 5))
+            // {
+            //     return true;
+            // }
+            // if (sameSuit.Any(g => g.Count() == 4) && allCards.Count <= 5)
+            // {
+            //     return true;
+            // }
+            // if (sameSuit.Any(g => g.Count() == 2) && allCards.Count == 2 && )
+            // {
+            //     return true;
+            // }
+
+            return false;
+        }
+
+        private static bool HasAtLeastOnePair(IList<Card> playerCards, IList<Card> communityCards)
+        {
+            if (playerCards.Select(c => c.Rank).Intersect(communityCards.Select(c => c.Rank)).Any())
             {
                 return true;
             }
-
-            return false;
+            else
+            {
+                return false;
+            }
         }
     }
 }
