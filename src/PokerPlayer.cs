@@ -31,11 +31,6 @@ namespace Nancy.Simple
 
             var betRound = gameState.BetIndex / gameState.Players.Count;
 
-            if (player.Stack < 300 && gameState.Round % 2 == 0)
-            {
-                return player.Stack;
-            }
-
             if(gameState.Round < 20)
             {
                 return 0;
