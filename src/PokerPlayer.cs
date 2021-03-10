@@ -31,6 +31,11 @@ namespace Nancy.Simple
 
             var betRound = gameState.BetIndex / gameState.Players.Count;
 
+            if (player.Stack < 300 && gameState.Round % 10 == 0)
+            {
+                return GetMinimumRaiseBetTimes(gameState, player.Bet, 5);
+            }
+
             if(gameState.Round < 20 || gameState.SmallBlind < 50)
             {
                 return 0;
