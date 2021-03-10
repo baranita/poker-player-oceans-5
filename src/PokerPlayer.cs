@@ -49,10 +49,11 @@ namespace Nancy.Simple
             }
             else
             {
-                if (HoleCard.AllCardsAreGood(player.Cards, gameState.CommunityCards))
+                var score = HoleCard.GetScore(player.Cards, gameState.CommunityCards);
+                if (score > 0)
                 {
                     return betRound <= 1
-                        ? GetMinimumRaiseBetTimes(gameState, player.Bet, 1)
+                        ? GetMinimumRaiseBetTimes(gameState, player.Bet, score)
                         : GetMinimumRaiseBetTimes(gameState, player.Bet, 0);
                 }
             }

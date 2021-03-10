@@ -58,17 +58,17 @@ namespace Nancy.Simple
             return false;
         }
 
-        public static bool AllCardsAreGood(IList<Card> playerCards, IList<Card> communityCards)
+        public static int GetScore(IList<Card> playerCards, IList<Card> communityCards)
         {
             var allCards = playerCards.Union(communityCards).ToList();
 
-            if (HasAtLeastOnePair(playerCards, communityCards)) return true;
+            if (HasAtLeastOnePair(playerCards, communityCards)) return 1;
 
-            if (IsStraight(allCards) && !IsStraight(communityCards)) return true;
+            if (IsStraight(allCards) && !IsStraight(communityCards)) return 3;
 
-            if (IsFlush(allCards) && !IsFlush(communityCards)) return true;
+            if (IsFlush(allCards) && !IsFlush(communityCards)) return 4;
 
-            if (IsFullHouse(allCards) && !IsFullHouse(communityCards)) return true;
+            if (IsFullHouse(allCards) && !IsFullHouse(communityCards)) return 5;
 
 
             // if (sameSuit.Any(g => g.Count() == 4) && allCards.Count <= 5)
@@ -80,7 +80,7 @@ namespace Nancy.Simple
             //     return true;
             // }
 
-            return false;
+            return 0;
         }
 
         private static bool IsStraight(IList<Card> cards)
