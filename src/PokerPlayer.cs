@@ -60,8 +60,7 @@ namespace Nancy.Simple
         private static bool IsHeadsUp(GameState gameState)
         {
             var activePlayers = gameState.Players.Where(p => p.Status == "active").ToList();
-            return activePlayers.Count == 2
-                   && gameState.Players.Except(activePlayers).All(p => p.Status != "active");
+            return activePlayers.Count == 2;
         }
 
         public static void ShowDown(JObject gameState)
