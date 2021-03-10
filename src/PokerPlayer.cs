@@ -31,6 +31,11 @@ namespace Nancy.Simple
 
             var betRound = gameState.BetIndex / gameState.Players.Count;
 
+            if(gameState.Round < 20 || gameState.SmallBlind < 50)
+            {
+                return 0;
+            }
+
             var isHeadsUp = IsHeadsUp(gameState);
             var shouldPlayMoreAggressive = ShouldPlayMoreAggressive(gameState, player);
             if (IsFirstBet(gameState))
