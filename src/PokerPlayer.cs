@@ -31,6 +31,11 @@ namespace Nancy.Simple
 
             var betRound = gameState.BetIndex / gameState.Players.Count;
 
+if(gameState.Round < 10)
+{
+return 0;
+}
+
             // if (IsHeadsUp(gameState))
             // {
                 if (HoleCard.IsHigh(player.Cards[0], player.Cards[1]) && !gameState.CommunityCards.Any()
