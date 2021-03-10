@@ -10,6 +10,6 @@ namespace Nancy.Simple
         [JsonProperty("status")] public string Status { get; set; }
         [JsonProperty("stack")] public int Stack { get; set; }
         [JsonProperty("bet")] public int Bet { get; set; }
-        [JsonProperty("hole_cards")] public List<Card> Cards { get; set; } = new List<Card>();
+        [JsonProperty("hole_cards")] public List<Card> Cards { get; set; }
     }
 }

@@ -23,8 +23,8 @@ namespace Nancy.Simple
 
         [JsonProperty("in_action")] public int InAction { get; set; }
 
-        [JsonProperty("players")] public List<Player> Players { get; set; } = new List<Player>();
+        [JsonProperty("players")] public List<Player> Players { get; set; }
 
-        [JsonProperty("community_cards")] public List<Card> CommunityCards { get; set; } = new List<Card>();
+        [JsonProperty("community_cards")] public List<Card> CommunityCards { get; set; }
     }
 }
