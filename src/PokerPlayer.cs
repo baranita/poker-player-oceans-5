@@ -4,14 +4,12 @@ namespace Nancy.Simple
 {
 	public static class PokerPlayer
 	{
-		public static readonly string VERSION = "V02";
-
-		private const string TeamName = "Oceans 5";
+		public static readonly string VERSION = "V01";
 
 		public static int BetRequest(JObject gameState)
 		{
-			var currentPlayer = gameState["players"][TeamName];
-			return currentPlayer["stack"].Value<int>();
+			//TODO: Use this method to return the value You want to bet
+			return 1000;
 		}
 
 		public static void ShowDown(JObject gameState)
