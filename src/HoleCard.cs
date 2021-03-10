@@ -63,13 +63,13 @@ namespace Nancy.Simple
 
         public static bool AllCardsAreGood(IList<Card> playerCards, IList<Card> communityCards)
         {
+            var allCards = playerCards.Union(communityCards).ToList();
+
             if (HasAtLeastOnePair(playerCards, communityCards)) return true;
 
-            // var sameSuit = allCards.GroupBy(c => c.Suit).ToList();
-            // if (sameSuit.Any(g => g.Count() >= 5))
-            // {
-            //     return true;
-            // }
+            if (IsFlush(allCards) && !IsFlush(communityCards)) return true;
+            
+            
             // if (sameSuit.Any(g => g.Count() == 4) && allCards.Count <= 5)
             // {
             //     return true;
@@ -80,6 +80,11 @@ namespace Nancy.Simple
             // }
 
             return false;
+        }
+
+        private static bool IsFlush(IList<Card> cards)
+        {
+            return cards.GroupBy(c => c.Suit).Any(g => g.Count() >= 5);
         }
 
         private static bool HasAtLeastOnePair(IList<Card> playerCards, IList<Card> communityCards)
