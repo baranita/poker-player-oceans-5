@@ -6,22 +6,22 @@ namespace Nancy.Simple
 {
     public static class HoleCard
     {
-        public static bool IsHigh(Card firstCard, Card secondCard)
+        public static bool IsHigh(Card firstCard, Card secondCard, bool shouldPlayMoreAggressive, bool isHeadsUp)
         {
             var rank1 = firstCard.Rank;
             var suit1 = firstCard.Suit;
             var rank2 = secondCard.Rank;
             var suit2 = secondCard.Suit;
 
-            if (rank1 == rank2)
+            if (rank1 == rank2 || suit1 == suit2)
             {
-                return IsHighCard(rank1);
+                return IsHighCard(rank1) && IsHighCard(rank2);
             }
 
             var rank1Enum = ParseRank(rank1);
             var rank2Enum = ParseRank(rank2);
-
-            if ((int) rank1Enum < 10 || (int) rank2Enum < 10)
+            if ((isHeadsUp && (int) rank1Enum < 10 || (int) rank2Enum < 10)
+                || ((int) rank1Enum < 10 && (int) rank2Enum < 10))
             {
                 return false;
             }
@@ -45,21 +45,12 @@ namespace Nancy.Simple
             return 0;
         }
 
-        // public static bool IsHighPair(Player player)
-        // {
-        //     return player.Cards
-        //         .Select(c => c.Rank)
-        //         // .Where(IsHighCard)
-        //         .Distinct()
-        //         .Count() == 1;
-        // }
-
         private static bool IsHighCard(string rank)
         {
             int number;
             int.TryParse(rank, out number);
 
-            if (number >= 7 || number < 0)
+            if (number >= 9 || number < 0)
             {
                 return true;
             }
