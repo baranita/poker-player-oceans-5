@@ -119,7 +119,11 @@ namespace Nancy.Simple
 
         private static bool HasAtLeastOnePair(IList<Card> playerCards, IList<Card> communityCards)
         {
-            if (playerCards.Select(c => c.Rank).Intersect(communityCards.Select(c => c.Rank)).Any())
+            var pairsWithCommunityCards = playerCards
+                .Select(c => ParseRank(c.Rank))
+                .Intersect(communityCards.Select(c => ParseRank(c.Rank)))
+                .ToList();
+            if (pairsWithCommunityCards.Any() && pairsWithCommunityCards.Max() >= Ranks.Eight)
             {
                 return true;
             }
