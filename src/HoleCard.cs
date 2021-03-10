@@ -21,7 +21,7 @@ namespace Nancy.Simple
             var rank1Enum = ParseRank(rank1);
             var rank2Enum = ParseRank(rank2);
 
-            if (rank1Enum == Ranks.LowNumber || rank2Enum == Ranks.LowNumber)
+            if ((int) rank1Enum < 10 || (int) rank2Enum < 10)
             {
                 return false;
             }
@@ -31,14 +31,17 @@ namespace Nancy.Simple
 
         private static Ranks ParseRank(string rank)
         {
-            rank = rank == "10" ? "X" : rank;
-            
-            if (Enum.IsDefined(typeof(Ranks), rank))
+            int number;
+            if (int.TryParse(rank, out number))
+            {
+                return (Ranks) number;
+            }
+            else if (Enum.IsDefined(typeof(Ranks), rank))
             {
                 return (Ranks) Enum.Parse(typeof(Ranks), rank);
             }
 
-            return Ranks.LowNumber;
+            return 0;
         }
 
         public static bool IsHighPair(Player player)
@@ -69,9 +72,11 @@ namespace Nancy.Simple
 
             if (HasAtLeastOnePair(playerCards, communityCards)) return true;
 
+            if (IsStraight(allCards) && !IsStraight(communityCards)) return true;
+
             if (IsFlush(allCards) && !IsFlush(communityCards)) return true;
-            
-            
+
+
             // if (sameSuit.Any(g => g.Count() == 4) && allCards.Count <= 5)
             // {
             //     return true;
@@ -82,6 +87,24 @@ namespace Nancy.Simple
             // }
 
             return false;
+        }
+
+        private static bool IsStraight(IList<Card> cards)
+        {
+            var orderedRanks = cards.Select(c => ParseRank(c.Rank)).OrderBy(r => r);
+            var previousRank = (Ranks)0;
+            var count = 0;
+            foreach (var rank in orderedRanks)
+            {
+                if ((int) rank - (int) previousRank == 1)
+                {
+                    count++;
+                }
+
+                previousRank = rank;
+            }
+
+            return count >= 5;
         }
 
         private static bool IsFlush(IList<Card> cards)
