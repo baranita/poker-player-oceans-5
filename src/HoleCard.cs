@@ -44,14 +44,14 @@ namespace Nancy.Simple
             return 0;
         }
 
-        public static bool IsHighPair(Player player)
-        {
-            return player.Cards
-                .Select(c => c.Rank)
-                // .Where(IsHighCard)
-                .Distinct()
-                .Count() == 1;
-        }
+        // public static bool IsHighPair(Player player)
+        // {
+        //     return player.Cards
+        //         .Select(c => c.Rank)
+        //         // .Where(IsHighCard)
+        //         .Distinct()
+        //         .Count() == 1;
+        // }
 
         private static bool IsHighCard(string rank)
         {

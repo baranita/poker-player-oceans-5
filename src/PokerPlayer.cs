@@ -46,7 +46,7 @@ namespace Nancy.Simple
             else
             {
                 Console.Error.WriteLine("Is no heads up");
-                if (HoleCard.IsHighPair(player))
+                if (HoleCard.IsHigh(player.Cards[0], player.Cards[1]))
                 {
                     // return GetMinimumRaiseBetTimes(gameState, 1);
                     return player.Stack;
