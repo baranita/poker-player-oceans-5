@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace Nancy.Simple
 {
@@ -8,7 +10,23 @@ namespace Nancy.Simple
 
 		public static int BetRequest(JObject gameState)
 		{
-			//TODO: Use this method to return the value You want to bet
+			try
+			{
+				var team = gameState["players"].Single(p => p.Name == "Oceans 5");
+				var cards = team["hole_cards"].ToList();
+				var cardOne = cards[0]["rank"];
+				var cardTwo = cards[1]["rank"];
+
+				if (cardOne == cardTwo)
+				{
+					return int.MaxValue;
+				}
+			}
+			catch (Exception e)
+			{
+				Console.Error.WriteLine(e.Message);
+			}
+			
 			return int.MaxValue;
 		}
 
