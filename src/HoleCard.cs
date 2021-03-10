@@ -15,15 +15,7 @@ namespace Nancy.Simple
 
             if (rank1 == rank2)
             {
-                int number;
-                int.TryParse(rank1, out number);
-
-                if (number > 6 || number < 0)
-                {
-                    return true;
-                }
-
-                return false;
+                return IsHighCard(rank1);
             }
 
             var rank1Enum = ParseRank(rank1);
@@ -47,9 +39,26 @@ namespace Nancy.Simple
             return Ranks.LowNumber;
         }
 
-        public static bool IsPair(Player player)
+        public static bool IsHighPair(Player player)
         {
-            return player.Cards.Select(c => c.Rank).Distinct().Count() == 1;
+            return player.Cards
+                .Select(c => c.Rank)
+                // .Where(IsHighCard)
+                .Distinct()
+                .Count() == 1;
+        }
+
+        private static bool IsHighCard(string rank)
+        {
+            int number;
+            int.TryParse(rank, out number);
+
+            if (number >= 7 || number < 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public static bool AllCardsAreGood(IList<Card> playerCards, IList<Card> communityCards)

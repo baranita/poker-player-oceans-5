@@ -30,14 +30,16 @@ namespace Nancy.Simple
 
             if (IsHeadsUp(gameState))
             {
-                var allCards = player.Cards.Union(gameState.CommunityCards).ToList();
-                if (HoleCard.IsHigh(player.Cards[0], player.Cards[1]) || HoleCard.AllCardsAreGood(player.Cards, gameState.CommunityCards))
+                Console.Error.WriteLine("Is heads up");
+                if (HoleCard.IsHigh(player.Cards[0], player.Cards[1])
+                    || HoleCard.AllCardsAreGood(player.Cards, gameState.CommunityCards))
                 {
                     return GetMinimumRaiseBetTimes(gameState, 3);
                 }
             }
-
-            if (HoleCard.IsPair(player))
+            
+            Console.Error.WriteLine("Is no heads up");
+            if (HoleCard.IsHighPair(player))
             {
                 return GetMinimumRaiseBetTimes(gameState, 1);
             }
@@ -54,7 +56,9 @@ namespace Nancy.Simple
 
         private static bool IsHeadsUp(GameState gameState)
         {
-            return gameState.Players.Count(p => p.Status == "active") == 2;
+            var activePlayers = gameState.Players.Where(p => p.Status == "active").ToList();
+            return activePlayers.Count == 2
+                   && gameState.Players.Except(activePlayers).All(p => p.Status != "active");
         }
 
         public static void ShowDown(JObject gameState)
