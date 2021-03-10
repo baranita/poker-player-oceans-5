@@ -68,6 +68,8 @@ namespace Nancy.Simple
 
             if (IsFlush(allCards) && !IsFlush(communityCards)) return true;
 
+            if (IsFullHouse(allCards) && !IsFullHouse(communityCards)) return true;
+
 
             // if (sameSuit.Any(g => g.Count() == 4) && allCards.Count <= 5)
             // {
@@ -97,6 +99,17 @@ namespace Nancy.Simple
             }
 
             return count >= 5;
+        }
+
+        private static bool IsFullHouse(IList<Card> cards)
+        {
+            var sameCardCounts = cards
+                .GroupBy(c => ParseRank(c.Rank))
+                .Select(g => g.Count())
+                .Where(x => x >= 2)
+                .ToList();
+
+            return sameCardCounts.Count >= 2 && sameCardCounts.Any(x => x >= 3);
         }
 
         private static bool IsFlush(IList<Card> cards)
