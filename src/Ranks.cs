@@ -3,7 +3,7 @@
     public enum Ranks
     {
         LowNumber = 0,
-        Ten = 10,
+        X = 10,
         J = 11, 
         D = 12, 
         K = 13,
