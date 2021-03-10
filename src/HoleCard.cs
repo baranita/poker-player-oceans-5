@@ -29,11 +29,13 @@ namespace Nancy.Simple
             return true;
         }
 
-        private static Ranks ParseRank(string suit1)
+        private static Ranks ParseRank(string rank)
         {
-            if (Enum.IsDefined(typeof(Ranks), suit1))
+            rank = rank == "10" ? "X" : rank;
+            
+            if (Enum.IsDefined(typeof(Ranks), rank))
             {
-                return (Ranks) Enum.Parse(typeof(Ranks), suit1);
+                return (Ranks) Enum.Parse(typeof(Ranks), rank);
             }
 
             return Ranks.LowNumber;
