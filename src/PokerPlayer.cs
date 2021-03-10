@@ -6,7 +6,7 @@ namespace Nancy.Simple
 {
     public static class PokerPlayer
     {
-        public static readonly string VERSION = "V02";
+        public static readonly string VERSION = "V04";
 
         private const string TeamName = "Oceans 5";
 
@@ -28,22 +28,28 @@ namespace Nancy.Simple
         {
             var player = gameState.Players.Single(p => p.Name == TeamName);
 
-            if (IsHeadsUp(gameState) && HoleCard.IsHigh(player))
+            if (IsHeadsUp(gameState))
             {
-                return GetRaiseBet(gameState);
+                var allCards = player.Cards.Union(gameState.CommunityCards).ToList();
+                if (HoleCard.IsHigh(player) || HoleCard.AllCardsAreGood(allCards))
+                {
+                    return GetMinimumRaiseBetTimes(gameState, 3);
+                }
             }
 
             if (HoleCard.IsPair(player))
             {
-                return GetRaiseBet(gameState);
+                return GetMinimumRaiseBetTimes(gameState, 1);
             }
 
             return 0;
         }
 
-        private static int GetRaiseBet(GameState gameState)
+        private static int GetMinimumRaiseBetTimes(GameState gameState, int times)
         {
-            return gameState.CurrentBuyIn - gameState.Players[gameState.InAction].Bet + gameState.MinimumRaise;
+            return gameState.CurrentBuyIn
+                   - gameState.Players[gameState.InAction].Bet
+                   + (times * gameState.MinimumRaise);
         }
 
         private static bool IsHeadsUp(GameState gameState)

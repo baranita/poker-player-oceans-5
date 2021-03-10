@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Nancy.Simple
@@ -49,6 +50,17 @@ namespace Nancy.Simple
         public static bool IsPair(Player player)
         {
             return player.Cards.Select(c => c.Rank).Distinct().Count() == 1;
+        }
+
+        public static bool AllCardsAreGood(IList<Card> allCards)
+        {
+            var pairs = allCards.GroupBy(c => c.Rank);
+            if (pairs.Any(g => g.Count() > 1))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
