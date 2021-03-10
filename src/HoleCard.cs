@@ -31,14 +31,15 @@ namespace Nancy.Simple
 
         private static Ranks ParseRank(string rank)
         {
+            if (Enum.IsDefined(typeof(Ranks), rank))
+            {
+                return (Ranks) Enum.Parse(typeof(Ranks), rank);
+            }
+
             int number;
             if (int.TryParse(rank, out number))
             {
                 return (Ranks) number;
-            }
-            else if (Enum.IsDefined(typeof(Ranks), rank))
-            {
-                return (Ranks) Enum.Parse(typeof(Ranks), rank);
             }
 
             return 0;
@@ -92,7 +93,7 @@ namespace Nancy.Simple
         private static bool IsStraight(IList<Card> cards)
         {
             var orderedRanks = cards.Select(c => ParseRank(c.Rank)).OrderBy(r => r);
-            var previousRank = (Ranks)0;
+            var previousRank = (Ranks) 0;
             var count = 0;
             foreach (var rank in orderedRanks)
             {

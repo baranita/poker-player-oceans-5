@@ -33,7 +33,6 @@ namespace Nancy.Simple
 
             if (IsHeadsUp(gameState))
             {
-                Console.Error.WriteLine("Is heads up");
                 if (HoleCard.IsHigh(player.Cards[0], player.Cards[1])
                     || HoleCard.AllCardsAreGood(player.Cards, gameState.CommunityCards))
                 {
@@ -44,7 +43,6 @@ namespace Nancy.Simple
             }
             else
             {
-                Console.Error.WriteLine("Is no heads up");
                 if (HoleCard.IsHigh(player.Cards[0], player.Cards[1]))
                 {
                     return betRound <= 1 
@@ -66,7 +64,11 @@ namespace Nancy.Simple
         private static bool IsHeadsUp(GameState gameState)
         {
             var activePlayers = gameState.Players.Where(p => p.Status == "active").ToList();
-            return activePlayers.Count == 2;
+            var isHeadsUp = activePlayers.Count == 2;
+            Console.Error.WriteLine("IsHeadsUp: " + isHeadsUp 
+                                  + ", Active: " + activePlayers.Count 
+                                  + ", Players: " + gameState.Players.Count);
+            return isHeadsUp;
         }
 
         public static void ShowDown(JObject gameState)
