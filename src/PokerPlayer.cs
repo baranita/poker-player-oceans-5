@@ -33,10 +33,10 @@ namespace Nancy.Simple
 
             if (player.Stack < 300 && gameState.Round % 2 == 0)
             {
-                return GetMinimumRaiseBetTimes(gameState, player.Bet, 5);
+                return player.Stack;
             }
 
-            if(gameState.Round < 20 || gameState.SmallBlind < 50)
+            if(gameState.Round < 20)
             {
                 return 0;
             }
