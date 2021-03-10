@@ -78,10 +78,12 @@
   <ItemGroup>
     <Compile Include="Card.cs" />
     <Compile Include="GameState.cs" />
+    <Compile Include="HoleCard.cs" />
     <Compile Include="MainModule.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PokerPlayer.cs" />
+    <Compile Include="Ranks.cs" />
     <Compile Include="Tests\PokerPlayerTest.ParseGameState.cs" />
   </ItemGroup>
   <ItemGroup>
