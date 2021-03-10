@@ -14,7 +14,8 @@ namespace Nancy.Simple
 
             if (rank1 == rank2)
             {
-                int.TryParse(rank1, out var number);
+                int number;
+                int.TryParse(rank1, out number);
 
                 if (number > 6 || number < 0)
                 {
