@@ -1,16 +1,20 @@
 ﻿using System;
+using System.Linq;
 
 namespace Nancy.Simple
 {
     public static class HoleCard
     {
-        public static bool IsHigh(string rank1, string suit1, string rank2, string suit2)
+        public static bool IsHigh(Player player)
         {
-            int number;
+            var rank1 = player.Cards[0].Rank;
+            var suit1 = player.Cards[0].Suit;
+            var rank2 = player.Cards[1].Rank;
+            var suit2 = player.Cards[1].Suit;
 
             if (rank1 == rank2)
             {
-                int.TryParse(rank1, out number);
+                int.TryParse(rank1, out var number);
 
                 if (number > 6 || number < 0)
                 {
@@ -39,6 +43,11 @@ namespace Nancy.Simple
             }
 
             return Ranks.LowNumber;
+        }
+
+        public static bool IsPair(Player player)
+        {
+            return player.Cards.Select(c => c.Rank).Distinct().Count() == 1;
         }
     }
 }
