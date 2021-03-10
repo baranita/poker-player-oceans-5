@@ -36,7 +36,7 @@ namespace Nancy.Simple
                 return GetMinimumRaiseBetTimes(gameState, player.Bet, 5);
             }
 
-            if(gameState.Round < 20 || gameState.SmallBlind < 50)
+            if(gameState.Round < 20)
             {
                 return 0;
             }
