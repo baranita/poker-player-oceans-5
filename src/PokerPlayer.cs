@@ -19,9 +19,10 @@ namespace Nancy.Simple
             catch (Exception exception)
             {
                 Console.Error.WriteLine(exception.Message);
+                Console.Error.WriteLine(exception.StackTrace);
             }
 
-            return int.MaxValue;
+            return 0;
         }
 
         public static int RunStrategy(GameState gameState)
@@ -40,11 +41,10 @@ namespace Nancy.Simple
             else
             {
                 Console.Error.WriteLine("Is no heads up");
-            }
-            
-            if (HoleCard.IsHighPair(player))
-            {
-                return GetMinimumRaiseBetTimes(gameState, 1);
+                if (HoleCard.IsHighPair(player))
+                {
+                    return GetMinimumRaiseBetTimes(gameState, 1);
+                }
             }
 
             return 0;
