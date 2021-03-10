@@ -14,17 +14,7 @@ namespace Nancy.Simple
 		{
 			try
 			{
-				var game = ParseGameState(gameState);
-				var player = game.Players.Single(p => p.Name == TeamName);
-
-				if (AreCardsOfSameRank(player))
-				{
-					return player.Stack;
-				}
-				else
-				{
-					return 0;
-				}
+				return RunStrategy(ParseGameState(gameState));
 			}
 			catch (Exception exception)
 			{
@@ -32,6 +22,20 @@ namespace Nancy.Simple
 			}
 			
 			return int.MaxValue;
+		}
+
+		public static int RunStrategy(GameState gameState)
+		{
+			var player = gameState.Players.Single(p => p.Name == TeamName);
+
+			if (AreCardsOfSameRank(player))
+			{
+				return player.Stack;
+			}
+			else
+			{
+				return 0;
+			}
 		}
 
 		private static bool AreCardsOfSameRank(Player player)

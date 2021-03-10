@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DeepEqual.Syntax;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -13,7 +14,7 @@ namespace Nancy.Simple.Tests
 
             var actual = PokerPlayer.ParseGameState(gameState);
 
-            Assert.That(actual, Is.EqualTo(ExpectedState));
+            actual.ShouldDeepEqual(ExpectedState);
         }
 
         private static readonly GameState ExpectedState = new GameState
